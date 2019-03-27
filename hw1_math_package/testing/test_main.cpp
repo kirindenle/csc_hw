@@ -1,8 +1,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
-#include "../dlltraining_main/registrator.hpp"
-#include "../dlltraining_main/expression.hpp"
+#include "../dlltraining_main/registrator.h"
 #include "../dlltraining_main/parser.h"
 
 Registrator & registrator = Registrator::instance();
