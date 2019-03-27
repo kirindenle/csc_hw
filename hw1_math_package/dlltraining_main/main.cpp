@@ -5,8 +5,8 @@
 #include <string>
 #include <sstream>
 #include "parser.h"
-#include "expression.hpp"
-#include "registrator.hpp"
+#include "MyExpressions.h"
+#include "registrator.h"
 
 // loads dll which has function: const char * exportInfo()
 // this function must return string made of lines in format 

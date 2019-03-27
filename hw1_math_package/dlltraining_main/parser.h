@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "expression.hpp"
-#include "registrator.hpp"
+#include "expression.h"
+#include "registrator.h"
 
 struct StringTree
 {
@@ -16,7 +16,7 @@ struct StringTree
 StringTree parse(const std::string & s);
 
 // takes tree of string with names of numbers and make it to expression
-std::unique_ptr<Expression> 
-stringTreeToExpression(
-    const StringTree & stree, 
-    Registrator & registrator);
+std::unique_ptr<default_expression::Expression>
+    stringTreeToExpression(
+        const StringTree & stree,
+        Registrator & registrator);

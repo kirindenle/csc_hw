@@ -1,8 +1,11 @@
 #include "parser.h"
+#include "MyExpressions.h"
 #include <vector>
 #include <string>
 #include <iostream>
 #include <cctype>
+
+using namespace default_expression;
 
 StringTree parse(const std::string & s)
 {
@@ -86,7 +89,10 @@ StringTree parse(const std::string & s)
     return {};
 }
 
-std::unique_ptr<Expression> stringTreeToExpression(const StringTree & stree, Registrator & registrator)
+std::unique_ptr<Expression> 
+stringTreeToExpression(
+    const StringTree & stree, 
+    Registrator & registrator)
 {
     if (isalpha(stree.s[0]))
     {
