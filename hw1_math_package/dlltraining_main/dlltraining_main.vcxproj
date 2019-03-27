@@ -119,12 +119,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyExpressions.cpp" />
     <ClCompile Include="parser.cpp" />
+    <ClCompile Include="registrator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="expression.hpp" />
+    <ClInclude Include="expression.h" />
+    <ClInclude Include="func_types.h" />
+    <ClInclude Include="MyExpressions.h" />
     <ClInclude Include="parser.h" />
-    <ClInclude Include="registrator.hpp" />
+    <ClInclude Include="registrator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
