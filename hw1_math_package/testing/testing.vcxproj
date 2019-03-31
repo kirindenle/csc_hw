@@ -115,13 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\dlltraining_main\MyExpressions.cpp" />
     <ClCompile Include="..\dlltraining_main\parser.cpp" />
+    <ClCompile Include="..\dlltraining_main\registrator.cpp" />
     <ClCompile Include="test_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\dlltraining_main\expression.hpp" />
+    <ClInclude Include="..\dlltraining_main\expression.h" />
+    <ClInclude Include="..\dlltraining_main\func_types.h" />
+    <ClInclude Include="..\dlltraining_main\MyExpressions.h" />
     <ClInclude Include="..\dlltraining_main\parser.h" />
-    <ClInclude Include="..\dlltraining_main\registrator.hpp" />
+    <ClInclude Include="..\dlltraining_main\registrator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
