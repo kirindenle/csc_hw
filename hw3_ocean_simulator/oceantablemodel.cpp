@@ -9,11 +9,19 @@
 OceanTableModel::OceanTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
-    QFile file("../ocean_first_try/size.opt");
-    file.open(QIODevice::ReadOnly);
-    QTextStream in(&file);
-    in >> width >> height;
-    size = width * height;
+    QFile file("../hw3_ocean_simulator/size.opt");
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&file);
+        in >> width >> height;
+        size = width * height;
+    }
+    else
+    {
+        width = 10;
+        height = 10;
+        size = width * height;
+    }
 
     random_walk.resize(size);
 
