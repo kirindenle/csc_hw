@@ -1,81 +1,30 @@
 // Math package 
-
-#include <windows.h> 
 #include <iostream>
 #include <string>
-#include <sstream>
 #include "parser.h"
 #include "MyExpressions.h"
 #include "registrator.h"
+#include "DLLLoader.h"
 
-// loads dll which has function: const char * exportInfo()
-// this function must return string made of lines in format 
-// "{name_of_function_in_code} {name_of_function_in_use} {number_of_arguments}\n"
-void loadDll(const char * dllName, Registrator & registrator)
-{
-    const auto libInstance = LoadLibrary(TEXT(dllName));
-    if (libInstance == nullptr)
-    {
-        std::cerr << "Can't load library: " << dllName << std::endl;
-        return;
-    }
-
-    typedef const char*(*ExportFuncType)();
-
-    const auto exportFuncName = "exportInfo";
-
-    const auto dllExportInfo = reinterpret_cast<ExportFuncType>(
-        GetProcAddress(libInstance, exportFuncName));
-
-    if (dllExportInfo == nullptr)
-    {
-        std::cerr << "Can't load library: " << dllName << 
-            ". No function " << exportFuncName << std::endl;
-        return;
-    }
-
-    std::stringstream exportStr(dllExportInfo());
-
-    for(std::string exportLine; std::getline(exportStr, exportLine); )
-    {
-        std::stringstream exportLineStream(exportLine);
-
-        std::string realName;
-        std::string parseName;
-        int nArgs;
-
-        exportLineStream >> realName >> parseName >> nArgs;
-
-        const auto func = reinterpret_cast<MathFunction>(
-            GetProcAddress(libInstance, realName.c_str()));
-
-        if (func == nullptr)
-        {
-            std::cerr << "Can't load function " << realName << 
-                "(" << parseName << ") from " << dllName << std::endl;
-            continue;
-        }
-
-        registrator.addFunction(parseName, func, nArgs);
-    }
-}
+using namespace math_pack;
 
 int main(int args, char * argv[])
 {
-    auto& regInstance = Registrator::instance();
+    Registrator registrator;
+    DllLoader dllLoader(registrator);
 
     for (int i = 1; i < args; ++i)
     {
-        loadDll(argv[i], regInstance);
+        dllLoader.loadDll(argv[i]);
     }
+
+    std::unique_ptr<IParser> parser = std::make_unique<BasicParser>(registrator);
 
     std::string input;
 
     std::getline(std::cin, input);
 
-    StringTree s = parse(input);
-
-    auto expression = stringTreeToExpression(s, regInstance);
+    auto expression = parser->buildExpression(input);
 
     std::cout << expression->run() << std::endl;
 

@@ -5,21 +5,18 @@
 #include <iostream>
 #include <cctype>
 
-using namespace default_expression;
+using namespace math_pack;
 
-StringTree parse(const std::string & s)
+BasicParser::StringTree BasicParser::parse(const std::string & s) const
 {
     std::vector<StringTree> stack;
 
     size_t i = 0;
-    bool inLeaf;
     while (i < s.size())
     {
-        //std::cerr << s[i] << std::endl;
-        inLeaf = false;
+        bool inLeaf = false;
         if (std::isblank(s[i]) || s[i] == '(' || s[i] == ',')
         {
-            //std::cerr << s[i] << std::endl;
             ++i;
         }
         else if (std::isalpha(s[i]))
@@ -29,7 +26,6 @@ StringTree parse(const std::string & s)
             {
                 name.push_back(s[i++]);
             }
-            //std::cerr << name << std::endl;
             stack.emplace_back();
             stack.back().s = name;
         }
@@ -43,8 +39,6 @@ StringTree parse(const std::string & s)
             stack.emplace_back();
             stack.back().s = number;
 
-            //std::cerr << number << std::endl;
-
             inLeaf = true;
         }
         else if (s[i] == ')')
@@ -57,12 +51,6 @@ StringTree parse(const std::string & s)
             std::cerr << "Parsing Error: Bad symbol " << s[i] << " in " << s << std::endl;
             break;
         }
-
-        /*for (const auto & ss : stack)
-        {
-            std::cerr << ss.s << ";";
-        }
-        std::cerr << std::endl;*/
 
         if (inLeaf)
         {
@@ -89,16 +77,20 @@ StringTree parse(const std::string & s)
     return {};
 }
 
+BasicParser::BasicParser(const Registrator& r)
+{
+    reg = &r;
+}
+
 std::unique_ptr<Expression> 
-stringTreeToExpression(
-    const StringTree & stree, 
-    Registrator & registrator)
+BasicParser::stringTreeToExpression(
+    const StringTree & stree) const
 {
     if (isalpha(stree.s[0]))
     {
         NArgsFunc func{};
 
-        if (!registrator.getFunction(stree.s, func))
+        if (!reg->getFunction(stree.s, func))
         {
             std::cerr << "ERROR. Can't make expression. No such function: " <<
                 stree.s << std::endl;
@@ -116,19 +108,25 @@ stringTreeToExpression(
         resultArgs.resize(func.nArgs);
         for (int i = 0; i < resultArgs.size(); ++i)
         {
-            resultArgs[i] = stringTreeToExpression(stree.children[i], registrator);
+            resultArgs[i] = stringTreeToExpression(stree.children[i]);
             if (resultArgs[i] == nullptr)
             {
                 return nullptr;
             }
         }
-        return std::make_unique<MyFunction>(func, std::move(resultArgs));
+        return std::make_unique<NFunction>(func, std::move(resultArgs));
     }
     if (isdigit(stree.s[0]))
     {
-        return std::make_unique<MyNumber>(std::stod(stree.s));
+        return std::make_unique<Constant>(std::stod(stree.s));
     }
 
     std::cerr << "ERROR. Can't make expression. Unknown word: " << stree.s << std::endl;
     return nullptr;
+}
+
+std::unique_ptr<Expression> BasicParser::buildExpression(const std::string & s)
+{
+    StringTree stree = parse(s);
+    return stringTreeToExpression(stree);
 }

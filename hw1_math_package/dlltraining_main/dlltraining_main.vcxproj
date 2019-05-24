@@ -118,14 +118,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DLLLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyExpressions.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="registrator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DLLLoader.h" />
     <ClInclude Include="expression.h" />
     <ClInclude Include="func_types.h" />
+    <ClInclude Include="IParser.h" />
     <ClInclude Include="MyExpressions.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="registrator.h" />

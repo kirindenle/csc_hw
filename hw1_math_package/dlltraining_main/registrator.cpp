@@ -3,6 +3,8 @@
 #include <string>
 #include <map>
 
+using namespace math_pack;
+
 bool Registrator::addFunction(const std::string & name, MathFunction f, int n_args)
 {
     NArgsFunc tmp = { f, n_args };
@@ -15,7 +17,7 @@ bool Registrator::replaceFunction(const std::string & name, MathFunction f, int 
     return functions_.insert_or_assign(name, tmp).second;
 }
 
-bool Registrator::getFunction(const std::string & name, NArgsFunc & result)
+bool Registrator::getFunction(const std::string & name, NArgsFunc & result) const
 {
     auto it = functions_.find(name);
     if (it != functions_.end())
@@ -24,10 +26,4 @@ bool Registrator::getFunction(const std::string & name, NArgsFunc & result)
         return true;
     }
     return false;
-}
-
-Registrator & Registrator::instance()
-{
-    static Registrator s;
-    return s;
 }

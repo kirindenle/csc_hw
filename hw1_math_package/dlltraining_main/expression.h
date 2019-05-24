@@ -1,6 +1,6 @@
 #pragma once
 
-namespace default_expression
+namespace math_pack
 {
     class Expression
     {

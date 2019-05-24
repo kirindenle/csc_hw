@@ -3,20 +3,24 @@
 #include "func_types.h"
 #include <memory>
 
-class MyFunction : public default_expression::Expression
+namespace math_pack
 {
-public:
-    MyFunction(NArgsFunc f_, std::vector<std::unique_ptr<Expression>> && args_);
-    double run() override;
+    class NFunction : public math_pack::Expression
+    {
+    public:
+        NFunction(NArgsFunc f_, std::vector<std::unique_ptr<Expression>> && args_);
+        double run() override;
 
-    NArgsFunc f;
-    std::vector<std::unique_ptr<Expression>> args;
-};
+        NArgsFunc f;
+        std::vector<std::unique_ptr<Expression>> args;
+    };
 
-class MyNumber : public default_expression::Expression
-{
-public:
-    MyNumber(double num_);
-    double run() override;
-    double num;
-};
+    class Constant : public math_pack::Expression
+    {
+    public:
+        Constant(double num_);
+        double run() override;
+        double num;
+    };
+
+}

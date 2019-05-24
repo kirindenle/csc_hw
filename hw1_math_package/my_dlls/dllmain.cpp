@@ -12,42 +12,42 @@
 
 
 extern "C" {
-    __declspec(dllexport) double Sum(std::vector<double> v)
+    __declspec(dllexport) double Sum(std::vector<double> & v)
     {
         return v[0] + v[1];
     }
 
-    __declspec(dllexport) double Mul(std::vector<double> v)
+    __declspec(dllexport) double Mul(std::vector<double> & v)
     {
         return v[0] * v[1];
     }
 
-    __declspec(dllexport) double Div(std::vector<double> v)
+    __declspec(dllexport) double Div(std::vector<double> & v)
     {
         return v[0] / v[1];
     }
 
-    __declspec(dllexport) double Minus(std::vector<double> v)
+    __declspec(dllexport) double Minus(std::vector<double> & v)
     {
         return v[0] - v[1];
     }
 
-    __declspec(dllexport) double Pow(std::vector<double> v)
+    __declspec(dllexport) double Pow(std::vector<double> & v)
     {
         return pow(v[0], v[1]);
     }
 
-    __declspec(dllexport) double Sqrt(std::vector<double> v)
+    __declspec(dllexport) double Sqrt(std::vector<double> & v)
     {
         return sqrt(v[0]);
     }
 
-    __declspec(dllexport) double Sinus(std::vector<double> v)
+    __declspec(dllexport) double Sinus(std::vector<double> & v)
     {
         return sin(v[0]);
     }
 
-    __declspec(dllexport) double Cosinus(std::vector<double> v)
+    __declspec(dllexport) double Cosinus(std::vector<double> & v)
     {
         return cos(v[0]);
     }

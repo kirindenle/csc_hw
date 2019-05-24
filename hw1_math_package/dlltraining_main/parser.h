@@ -3,20 +3,33 @@
 #include <string>
 #include "expression.h"
 #include "registrator.h"
+#include "IParser.h"
 
-struct StringTree
+namespace math_pack
 {
-    std::string s;
-    std::vector<StringTree> children;
-};
+    // parses string in format:
+    // s = name(s,...,s) | number
+    // spaces between elements are allowed
+    class BasicParser : public IParser
+    {
+        struct StringTree
+        {
+            std::string s;
+            std::vector<StringTree> children;
+        };
+        StringTree parse(const std::string & s) const;
+        // takes tree of string with names of numbers and make it to expression
+        std::unique_ptr<math_pack::Expression>
+            stringTreeToExpression(
+                const StringTree & stree) const;
+    public:
+        explicit BasicParser(const Registrator &);
+        std::unique_ptr<math_pack::Expression>
+            buildExpression(const std::string & s) override;
+    private:
+        const Registrator * reg;
+    };
+}
 
-// parses string in format:
-// s = name(s,...,s) | number
-// spaces between elements are allowed
-StringTree parse(const std::string & s);
 
-// takes tree of string with names of numbers and make it to expression
-std::unique_ptr<default_expression::Expression>
-    stringTreeToExpression(
-        const StringTree & stree,
-        Registrator & registrator);
+

@@ -1,11 +1,13 @@
 #include "expression.h"
 #include "MyExpressions.h"
 
-MyFunction::MyFunction(
+using namespace math_pack;
+
+NFunction::NFunction(
     NArgsFunc f_, 
     std::vector<std::unique_ptr<Expression>> && args_) : f(f_), args(std::move(args_)) {}
 
-double MyFunction::run()
+double NFunction::run()
 {
     std::vector<double> argsValues;
     argsValues.resize(args.size());
@@ -16,9 +18,9 @@ double MyFunction::run()
     return f.f(argsValues);
 }
 
-MyNumber::MyNumber(double num_) : num(num_) {}
+Constant::Constant(double num_) : num(num_) {}
 
-double MyNumber::run()
+double Constant::run()
 {
     return num;
 }

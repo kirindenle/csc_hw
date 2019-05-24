@@ -1,10 +1,13 @@
 #pragma once
 #include <vector>
 
-typedef double(*MathFunction)(std::vector<double>);
-
-struct NArgsFunc
+namespace math_pack
 {
-    MathFunction f;
-    int nArgs;
-};
+    typedef double(*MathFunction)(std::vector<double> &);
+
+    struct NArgsFunc
+    {
+        MathFunction f;
+        int nArgs;
+    };
+}
